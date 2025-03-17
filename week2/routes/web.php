@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
+Use App\Http\Controllers\PageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,3 +65,8 @@ Route::get('/user/{name?}', function ($name='John') {
     // Mengembalikan teks 'Nama saya ...' sebagai respons langsung
     return 'Nama saya '.$name; 
     });
+
+// pendefinisian rute GET untuk URL /user
+Route::get('/', [PageController::class, 'index']);
+Route::get('/about', [PageController::class, 'about']);
+Route::get('/articles/{id}', [PageController::class, 'articles']);
