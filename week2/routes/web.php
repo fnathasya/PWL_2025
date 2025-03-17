@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 Use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,6 +70,11 @@ Route::get('/user/{name?}', function ($name='John') {
     });
 
 // pendefinisian rute GET untuk URL /user
-Route::get('/', [PageController::class, 'index']);
-Route::get('/about', [PageController::class, 'about']);
-Route::get('/articles/{id}', [PageController::class, 'articles']);
+// Route::get('/', [PageController::class, 'index']);
+// Route::get('/about', [PageController::class, 'about']);
+// Route::get('/articles/{id}', [PageController::class, 'articles']);
+
+// Routing dengan Single Action Controller
+Route::get('/', HomeController::class);
+Route::get('/about', AboutController::class);
+Route::get('/articles/{id}', ArticleController::class);
