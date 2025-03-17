@@ -6,6 +6,7 @@ Use App\Http\Controllers\PageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PhotoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -78,3 +79,14 @@ Route::get('/user/{name?}', function ($name='John') {
 Route::get('/', HomeController::class);
 Route::get('/about', AboutController::class);
 Route::get('/articles/{id}', ArticleController::class);
+
+// Route ini akan membuat route dengan semua aksi default untuk controller PhotoController
+Route::resource('photos', PhotoController::class); 
+
+//  Route ini akan membuat route dengan aksi 'index' dan 'show' saja untuk controller PhotoControlle
+Route::resource('photos', PhotoController::class)->only([ 
+    'index', 'show' 
+]); 
+// Route ini akan membuat route dengan semua aksi kecuali 'create', 'store', 'update', dan 'destroy' untuk controller PhotoController
+Route::resource('photos', PhotoController::class)->except([ 
+    'create', 'store', 'update', 'destroy' ]); 
