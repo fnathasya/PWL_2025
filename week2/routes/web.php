@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PhotoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -90,3 +91,11 @@ Route::resource('photos', PhotoController::class)->only([
 // Route ini akan membuat route dengan semua aksi kecuali 'create', 'store', 'update', dan 'destroy' untuk controller PhotoController
 Route::resource('photos', PhotoController::class)->except([ 
     'create', 'store', 'update', 'destroy' ]); 
+
+// Route::get('/greeting', function () { 
+//     return view('blog.hello', ['name' => 'tasya']); 
+// });
+
+// Route ini akan memanggil method 'greeting' pada controller 'WelcomeController' ketika diakses
+Route::get('/greeting', [WelcomeController::class, 'greeting']);
+

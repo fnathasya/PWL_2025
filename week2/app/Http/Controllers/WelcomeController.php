@@ -11,5 +11,12 @@ class WelcomeController extends Controller
         return 'Hello World';
     }
 
-   
+    // Menambahkan method greeting
+    public function greeting(){
+        return view('blog.hello')
+        ->with('name','tasya') 
+        ->with('occupation','Astronaut'); 
+
+
+    }
 }
