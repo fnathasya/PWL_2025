@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,11 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Mendefinisikan rute GET untuk URL /hello
-Route::get('/hello', function () {
-    // Mengembalikan teks 'Hello World' sebagai respons langsung
-    return 'Hello World';
-});
+// Mendefinisikan route HTTP GET untuk URL '/hello'
+Route::get('/hello', [WelcomeController::class, 'hello']); 
+// Route ini akan memanggil method 'hello' pada controller 'WelcomeController' ketika diakses
 
 // pendefinisian rute GET untuk URL /world
 Route::get('/world', function () {    
