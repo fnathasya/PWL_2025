@@ -53,3 +53,15 @@ Route::get('/articles/{id}', function ($id) {
     // Mengembalikan teks 'Halaman Artikel dengan ID ...' sebagai respons langsung
     return 'Halaman Artikel dengan ID ' . $id;
 });
+
+// pendefinisian rute GET untuk URL /user
+Route::get('/user/{name?}', function ($name=null) { 
+    // Mengembalikan teks 'Nama saya ...' sebagai respons langsung
+    return 'Nama saya '.$name; 
+}); 
+
+// pendefinisian rute GET untuk URL /user
+Route::get('/user/{name?}', function ($name='John') { 
+    // Mengembalikan teks 'Nama saya ...' sebagai respons langsung
+    return 'Nama saya '.$name; 
+    });
