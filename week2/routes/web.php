@@ -35,4 +35,21 @@ Route::get('/about', function () {
     // Mengembalikan teks 'Faiza / 2341760105' sebagai respons langsung
     return 'Faiza / 2341760105';
 });
+
+// pendefinisian rute GET untuk URL /articles
+Route::get('/user/{name}', function ($name) { 
+    // Mengembalikan teks 'Nama saya ...' sebagai respons langsung
+    return 'Nama saya '.$name; 
+    }); 
     
+// pendefinisian rute GET untuk URL /articles
+Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) { 
+    // Mengembalikan teks 'Pos ke-... Komentar ke-...' sebagai respons langsung
+    return 'Pos ke-'.$postId." Komentar ke-: ".$commentId; 
+}); 
+
+// pendefinisian rute GET untuk URL /articles
+Route::get('/articles/{id}', function ($id) { 
+    // Mengembalikan teks 'Halaman Artikel dengan ID ...' sebagai respons langsung
+    return 'Halaman Artikel dengan ID ' . $id;
+});
