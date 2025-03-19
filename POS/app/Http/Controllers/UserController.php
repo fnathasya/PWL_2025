@@ -35,7 +35,8 @@ class UserController extends Controller
 
         // $user = UserModel::findOrfail(1); // Mengambil data user dengan id 1, jika tidak ditemukan akan menampilkan error 404
         
-        $user = UserModel::where('username', 'manager9')->firstOrFail(); // Mengambil data user dengan username 'manager9', jika tidak ditemukan akan menampilkan error 404
+        // $user = UserModel::where('username', 'manager9')->firstOrFail(); // Mengambil data user dengan username 'manager9', jika tidak ditemukan akan menampilkan error 404
+        $user = UserModel::where('level_id', 2)->count(); // Mengambil jumlah user dengan level_id 2
         return view('user', ['data' => $user]); // Mengambil nama level user
         
         // akses model UserModel
