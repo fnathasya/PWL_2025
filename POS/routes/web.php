@@ -48,4 +48,5 @@ Route::get('/', function () {
 
 // Akses URL: '/level', menjalankan method 'index' di LevelController
 Route::get('/level', [LevelController::class, 'index']);
-Route::get('kategori', [KategoriController::class, 'index']);
+Route::get('/kategori', [KategoriController::class, 'index']);
+Route::get('/user', [UserController::class, 'index']);
