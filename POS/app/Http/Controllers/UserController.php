@@ -36,11 +36,36 @@ class UserController extends Controller
         // $user = UserModel::findOrfail(1); // Mengambil data user dengan id 1, jika tidak ditemukan akan menampilkan error 404
         
         // $user = UserModel::where('username', 'manager9')->firstOrFail(); // Mengambil data user dengan username 'manager9', jika tidak ditemukan akan menampilkan error 404
-        $user = UserModel::where('level_id', 2)->count(); // Mengambil jumlah user dengan level_id 2
-        return view('user', ['data' => $user]); // Mengambil nama level user
+        // $user = UserModel::where('level_id', 2)->count(); // Mengambil jumlah user dengan level_id 2
+        // return view('user', ['data' => $user]); // Mengambil nama level user
         
         // akses model UserModel
         // $user = UserModel::all(); // Mengambil semua data user
         // return view('user', ['data' => $user]); // Mengirim data user ke view
+
+        // Menggunakan firstOrCreate
+        // $user = UserModel::firstOrCreate(
+        //     [
+        //         'username' => 'manager22',
+        //         'nama' => 'Manager Dua Dua',
+        //         'password' => Hash::make('12345'),
+        //         'level_id' => 2,
+        //     ],
+        // );
+
+        // Menggunakan firstOrNew
+        $user = UserModel::firstOrNew(
+            [
+                'username' => 'manager33',
+                'nama' => 'Manager Tiga Tiga',
+                'password' => Hash::make('12345'),
+                'level_id' => 2,
+            ],
+        );
+        $user->save(); // Menyimpan data user baru
+        return view('user', ['data' => $user]); // Mengirim data user ke view
+
+        
+
     }
 }

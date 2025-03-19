@@ -15,6 +15,7 @@ class UserModel extends Model
     protected $fillable = [                 // Mendefinisikan kolom yang dapat diisi dengan data
         'username',
         'nama',
-        'level_id'
+        'level_id',
+        'password',
     ];
 }
