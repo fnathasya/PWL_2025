@@ -29,9 +29,13 @@ class UserController extends Controller
         // $user = UserModel::find(1); // Mengambil data user dengan id 1
         // $user = UserModel::where('level_id', 1)->first(); // Mengambil data user dengan level_id 1
         // $user = UserModel::firstWhere('level_id', 1); // Mengambil data user dengan level_id 1
-        $user = UserModel::findOr(20, ['username', 'nama'], function(){
-            abort(404);
-        }); // Mengambil data user dengan id 1, hanya kolom username dan nama
+        // $user = UserModel::findOr(20, ['username', 'nama'], function(){
+        //     abort(404);
+        // }); // Mengambil data user dengan id 1, hanya kolom username dan nama
+
+        // $user = UserModel::findOrfail(1); // Mengambil data user dengan id 1, jika tidak ditemukan akan menampilkan error 404
+        
+        $user = UserModel::where('username', 'manager9')->firstOrFail(); // Mengambil data user dengan username 'manager9', jika tidak ditemukan akan menampilkan error 404
         return view('user', ['data' => $user]); // Mengambil nama level user
         
         // akses model UserModel
