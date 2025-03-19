@@ -54,18 +54,46 @@ class UserController extends Controller
         // );
 
         // Menggunakan firstOrNew
-        $user = UserModel::firstOrNew(
-            [
-                'username' => 'manager33',
-                'nama' => 'Manager Tiga Tiga',
-                'password' => Hash::make('12345'),
-                'level_id' => 2,
-            ],
-        );
-        $user->save(); // Menyimpan data user baru
-        return view('user', ['data' => $user]); // Mengirim data user ke view
+        // $user = UserModel::firstOrNew(
+        //     [
+        //         'username' => 'manager33',
+        //         'nama' => 'Manager Tiga Tiga',
+        //         'password' => Hash::make('12345'),
+        //         'level_id' => 2,
+        //     ],
+        // );
+        // $user->save(); // Menyimpan data user baru
+        // return view('user', ['data' => $user]); // Mengirim data user ke view
 
-        
+         // Membuat data user baru
+         $user = UserModel::create([
+            'username'  => 'manager55',
+            'nama'      => 'Manager55',
+            'password'  => Hash::make('12345'),
+            'level_id'  => 2,
+        ]);
 
+        // Membuat data user baru
+        $user = UserModel::create([
+            'username'  => 'manager11',
+            'nama'      => 'Manager11',
+            'password'  => Hash::make('12345'),
+            'level_id'  => 2,
+        ]);
+
+        // Ubah nilai username
+        $user->username = 'manager12';
+
+        // Simpan perubahan
+        $user->save();
+
+        // Cek apakah ada perubahan setelah disimpan
+        dump($user->wasChanged());                          // true
+        dump($user->wasChanged('username'));               // true
+        dump($user->wasChanged(['username', 'level_id'])); // true
+        dump($user->wasChanged('nama'));                   // false
+
+        // Dump terakhir
+        dd($user->wasChanged(['nama', 'username']));       // true
     }
 }
