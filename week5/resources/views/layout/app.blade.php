@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-{{-- Extend and customize the browser title --}} 
+{{-- Extend and customize the browser title --}}
 
 @section('title')
     {{ config('adminlte.title') }} 
@@ -72,7 +72,7 @@
 
 {{-- Add common CSS customizations --}}
 @push('css')
-<link href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css" rel="stylesheet" />
     <style type="text/css">
         {{-- You can add AdminLTE customizations here --}}
         /*

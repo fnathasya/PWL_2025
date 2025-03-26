@@ -22,9 +22,19 @@ class KategoriDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            // ->addColumn('action', 'kategori.action')
+            ->addColumn('action', function ($row) {
+                return '
+                    <a href="'.route('kategori.edit', $row->kategori_id).'" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="'.route('kategori.destroy', $row->kategori_id).'" method="POST" class="d-inline" onsubmit="return confirm(\'Yakin hapus kategori ini?\')">
+                        '.csrf_field().'
+                        '.method_field("DELETE").'
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                ';
+            })
             ->setRowId('kategori_id');
     }
+
 
     /**
      * Get the query source of dataTable.
