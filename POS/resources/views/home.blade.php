@@ -7,14 +7,19 @@
     <title>Home Page</title>
 </head>
 <body>
-    <h1> HI! WELCOME TO HOME PAGE POS</h1>
+    {{-- <h1> HI! WELCOME TO HOME PAGE POS</h1>
     <h3> PRODUCT CATEGORIES : </h3>
     <ul>
         <li><a href="{{ route('category.food-beverage') }}">Food & Beverages</a></li>
         <li><a href="{{ route('category.beauty-health') }}">Beauty & Health</a></li>
         <li><a href="{{ route('category.home-care') }}">Home Care</a></li>
         <li><a href="{{ route('category.baby-kid') }}">Baby & Kids</a></li>
-    </ul>
-    
+    </ul> --}}
+    @extends('app') {{-- Sesuaikan dengan file layout utama --}}
+
+@section('content')
+    <h1>Welcome to Home</h1>
+@endsection
+
 </body>
 </html>
