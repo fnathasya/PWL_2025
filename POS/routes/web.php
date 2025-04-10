@@ -10,51 +10,16 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\WelcomeController;
 
-// Route untuk halaman utama (homepage)
-// Route::get('/', [HomeController::class, 'index']); // Akses URL: '/', menjalankan method 'index' di HomeController
 
-// Group route dengan prefix 'products'
-// Route::prefix('products')->group(function () {
-    
-//     // Route untuk kategori Food & Beverages
-//     Route::get('/food-beverages', [ProductController::class, 'foodBeverages'])->name('category.food-beverage');
-//     // Akses URL: '/products/food-beverages', method 'foodBeverages' di ProductController, nama route: category.food-beverage
+Route::get('/', [WelcomeController::class, 'index']); // menampilkan halaman awal aplikasi
 
-//     // Route untuk kategori Beauty & Health
-//     Route::get('/beauty-health', [ProductController::class, 'beautyHealth'])->name('category.beauty-health');
-//     // Akses URL: '/products/beauty-health', method 'beautyHealth', nama route: category.beauty-health
-
-//     // Route untuk kategori Home Care
-//     Route::get('/home-care', [ProductController::class, 'homeCare'])->name('category.home-care');
-//     // Akses URL: '/products/home-care', method 'homeCare', nama route: category.home-care
-
-//     // Route untuk kategori Baby & Kid
-//     Route::get('/baby-kid', [ProductController::class, 'babyKid'])->name('category.baby-kid');
-//     // Akses URL: '/products/baby-kid', method 'babyKid', nama route: category.baby-kid
-// });
-
-// // Route untuk halaman profile user
-// Route::get('/user/{id}/{name}', [UserController::class, 'showProfile'])->name('user.profile');
-// // Akses URL: '/user/{id}/{name}', menjalankan method 'showProfile' di UserController, nama route: user.profile
-
-// // Route untuk halaman sales
-// Route::get('/sales', [SalesController::class, 'index'])->name('sales');
-// Akses URL: '/sales', menjalankan method 'index' di SalesController, nama route: sales
-
-// Akses URL: '/', menjalankan function yang mengembalikan view 'welcome'
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-
-// Akses URL: '/level', menjalankan method 'index' di LevelController
-Route::get('/level', [LevelController::class, 'index']);
-Route::get('/kategori', [KategoriController::class, 'index']);
-Route::get('/user', [UserController::class, 'index']);
-Route::get('/user/tambah', [UserController::class, 'tambah']);
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']);
-Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
-Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
-Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
-
-Route::get('/', [WelcomeController::class, 'index']);
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', [UserController::class, 'index']);            // menampilkan halaman awal user
+    Route::post('/list', [UserController::class, 'list']);        // menampilkan data user dalam bentuk JSON untuk datatables
+    Route::get('/create', [UserController::class, 'create']);     // menampilkan halaman form tambah user
+    Route::post('/', [UserController::class, 'store']);           // menyimpan data user baru
+    Route::get('/{id}', [UserController::class, 'show']);         // menampilkan detail user
+    Route::get('/{id}/edit', [UserController::class, 'edit']);    // menampilkan halaman form edit user
+    Route::put('/{id}', [UserController::class, 'update']);       // menyimpan perubahan data user
+    Route::delete('/{id}', [UserController::class, 'destroy']);   // menghapus data user
+});

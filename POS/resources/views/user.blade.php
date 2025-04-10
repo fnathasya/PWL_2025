@@ -8,13 +8,13 @@
     <a href="/user/tambah">+ Tambah User</a>
     <table border="1" cellpadding="2" cellspacing="0">
         <tr>
-            <td>ID</td>
-            <td>Username</td>
-            <td>Nama</td>
-            <td>ID Level Pengguna</td>
-            <td>Kode Level</td>
-            <td>Nama Level</td>
-            <td>Aksi</td>
+            <td> ID </td>
+            <td> Username </td>
+            <td> Nama </td>
+            <td> ID Level Pengguna </td>
+            <td> Kode Level </td>
+            <td> Nama Level </td>
+            <td> Aksi </td>
             {{-- <th>ID</th>
             <th>Username</th>
             <th>Nama</th>
