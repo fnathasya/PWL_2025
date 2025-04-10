@@ -23,9 +23,12 @@ class UserController extends Controller
 
         $activeMenu = 'user'; // set menu yang sedang aktif
 
+        $level = LevelModel::all(); // ambil data level untuk ditampilkan di form
+
         return view('user.index', [
             'breadcrumb' => $breadcrumb,
             'page'       => $page,
+            'level'      => $level,
             'activeMenu' => $activeMenu
         ]);
     }
@@ -92,6 +95,11 @@ class UserController extends Controller
     {
         $users = UserModel::select('user_id', 'username', 'nama', 'level_id')
                         ->with('level');
+
+        // Filter data user berdasarkan level_id
+        if ($request->level_id) {
+            $users->where('level_id', $request->level_id);
+        }
 
         return datatables()::of($users)
             // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
@@ -250,5 +258,7 @@ class UserController extends Controller
             return redirect('/user')->with('error', 'Data user gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
     }
+
+
 
 }
