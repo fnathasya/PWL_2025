@@ -36,3 +36,16 @@ Route::group(['prefix' => 'level'], function () {
     Route::put('/{id}', [LevelController::class, 'update']);        // menyimpan perubahan data level
     Route::delete('/{id}', [LevelController::class, 'destroy']);    // menghapus data level
 });
+
+// CRUD Kategori
+Route::group(['prefix' => 'kategori'], function () {
+    Route::get('/', [KategoriController::class, 'index'])->name('kategori.index'); // halaman utama
+    Route::post('/list', [KategoriController::class, 'list'])->name('kategori.list'); // untuk datatables ajax
+    Route::get('/create', [KategoriController::class, 'create'])->name('kategori.create'); // form tambah
+    Route::post('/', [KategoriController::class, 'store'])->name('kategori.store'); // simpan data baru
+    Route::get('/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit'); // form edit
+    Route::put('/{id}', [KategoriController::class, 'update'])->name('kategori.update'); // update data
+    Route::delete('/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy'); // hapus data
+    Route::get('/{id}', [KategoriController::class, 'show'])->name('kategori.show');
+
+});
