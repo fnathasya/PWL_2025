@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\UserModel;
 use App\Models\LevelModel;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class UserController extends Controller
 {
@@ -107,11 +109,16 @@ class UserController extends Controller
 
             // menambahkan kolom aksi
             ->addColumn('aksi', function($user) {
-                $btn = '<a href="' . url('/user/' . $user->user_id) . '" class="btn btn-info btn-sm">Detail</a> ';
-                $btn .= '<a href="' . url('/user/' . $user->user_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
-                $btn .= '<form class="d-inline-block" method="POST" action="' . url('/user/' . $user->user_id) . '">';
-                $btn .= csrf_field() . method_field('DELETE');
-                $btn .= '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\')">Hapus</button></form>';
+                // $btn = '<a href="' . url('/user/' . $user->user_id) . '" class="btn btn-info btn-sm">Detail</a> ';
+                // $btn .= '<a href="' . url('/user/' . $user->user_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
+                // $btn .= '<form class="d-inline-block" method="POST" action="' . url('/user/' . $user->user_id) . '">';
+                // $btn .= csrf_field() . method_field('DELETE');
+                // $btn .= '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\')">Hapus</button></form>';
+
+                $btn  = '<button onclick="modalAction(\'' . url('/user/' . $user->user_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/user/' . $user->user_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/user/' . $user->user_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button>';
+
                 return $btn;
             })
 
@@ -259,6 +266,112 @@ class UserController extends Controller
         }
     }
 
+    public function create_ajax()
+    {
+        $level = LevelModel::select('level_id', 'level_nama')->get(); 
 
+        return view('user.create_ajax')
+            ->with('level', $level);
+    }
+
+    public function store_ajax(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'level_id' => 'required|integer',
+            'username' => 'required|min:3|max:20|unique:m_user,username',
+            'nama' => 'required|min:3|max:100',
+            'password' => 'required|min:6|max:20',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi gagal!',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+    
+        try {
+            // Cek manual apakah username sudah ada (untuk feedback lebih jelas)
+            if (UserModel::where('username', $request->username)->exists()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Username sudah digunakan, silakan gunakan yang lain.',
+                ]);
+            }
+    
+            $user = new UserModel();
+            $user->level_id = $request->level_id;
+            $user->username = $request->username;
+            $user->nama = $request->nama;
+            $user->password = bcrypt($request->password);
+            $user->save();
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Data user berhasil disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    // Menampilkan halaman form edit user dengan ajax
+    public function edit_ajax(string $id)
+    {
+        $user = UserModel::find($id);
+        $level = LevelModel::select('level_id', 'level_nama')->get(); 
+
+        return view('user.edit_ajax', [
+            'user' => $user,
+            'level' => $level
+        ]);
+    }
+    
+    // Menyimpan perubahan data user dengan ajax
+    public function update_ajax(Request $request, string $id)
+    {
+        // cek apakah request dari ajax
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'level_id' => 'required|integer',
+                'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
+                'nama' => 'required|max:100',
+                'password' => 'nullable|min:6|max:20',
+            ];
+
+            // use Illuminate\Support\Facades\Validator;
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false, // status false jika validasi gagal
+                    'message' => 'Validasi gagal!',
+                    'msgField' => $validator->errors(), // mengembalikan pesan error
+                ]);
+            }
+
+            $check = UserModel::find($id); // untuk mengecek apakah data user dengan id yang dimaksud ada atau tidak
+            if (!$check) {
+                if (!$request->filled('password')) { // jika password tidak diisi
+                    $request->request->remove('password'); // hapus password dari request
+                }
+
+                $check->update(request()->all()); // update data user
+                return response()->json([
+                    'status' => true, // status true jika berhasil
+                    'message' => 'Data user berhasil diubah!',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false, // status false jika data tidak ditemukan
+                    'message' => 'Data user tidak ditemukan!',
+                ]);
+            }
+        }
+        return redirect('/');   
+    }
 
 }
