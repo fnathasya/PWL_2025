@@ -2,14 +2,17 @@
 
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">🔥 Welcome back, Captain. Let’s get things done!</h3>
-        <div class="card-tools"></div>
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h1 class="display-4">📊 Dashboard Sistem Point Of Sales 📊</h1>
+        <p class="text-muted">Selamat datang di sistem  POS 2025! Kelola data Anda dengan mudah dan efisien.</p>
     </div>
-    <div class="card-body">
-    Data’s fresh, sistem on fire, tinggal kamu yang action.  
-    Mau input, update, atau ngatur strategi — <br> Semesta dashboard siap nemenin kamu!
+
+    <!-- Konten Utama -->
+    <div class="text-center">
+        <p class="text-muted">Sistem ini dirancang untuk membantu Anda mengelola bisnis dengan lebih baik.</p>
     </div>
 </div>
+
 @endsection

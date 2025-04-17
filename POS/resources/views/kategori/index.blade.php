@@ -44,6 +44,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>ID kategori</th>
                         <th>Kode Kategori</th>
                         <th>Nama Kategori</th>
                         <th>Aksi</th>
@@ -78,6 +79,7 @@
                 },
                 columns: [
                     { data: "DT_RowIndex", className: "text-center", orderable: false, searchable: false },
+                    { data: "kategori_id", orderable: true, searchable: true },
                     { data: "kategori_kode", orderable: true, searchable: true },
                     { data: "kategori_nama", orderable: true, searchable: true },
                     { data: "aksi", className: "text-center", orderable: false, searchable: false }
