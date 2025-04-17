@@ -132,6 +132,14 @@ class UserController extends Controller
             'activeMenu' => $activeMenu
         ]);
     }
+
+    //Show AJAX
+    public function show_ajax(string $id)
+    {
+        $user = UserModel::find($id);
+        return view('user.show_ajax', ['user' => $user]);
+    }
+
     // Menampilkan halaman form edit user
     public function edit(string $id)
     {
@@ -520,7 +528,6 @@ class UserController extends Controller
                  $userId = $user->user_id;
      
              $userModel = UserModel::find($userId);
-     
              if (!$userModel) {
                  return redirect('/login')->with('error', 'User tidak ditemukan');
              }
@@ -529,11 +536,9 @@ class UserController extends Controller
              if ($userModel->profile_picture && file_exists(storage_path('app/public/' . $userModel->profile_picture))) {
                  Storage::disk('public')->delete($userModel->profile_picture);
              }
-     
              // update foto profile baru 
              $fileName = 'profile_' . $userId . '_' . time() . '.' . $request->profile_picture->extension();
              $path = $request->profile_picture->storeAs('profiles', $fileName, 'public');
-     
              // Update
              UserModel::where('user_id', $userId)->update([
                  'profile_picture' => $path
